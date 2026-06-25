@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creamy Bakers By Niha</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family: Arial, sans-serif;
+    background:#fffaf7;
+    color:#333;
+}
+
+header{
+    background:#f8d7da;
+    padding:20px;
+    text-align:center;
+}
+
+header h1{
+    color:#8b4513;
+    font-size:40px;
+}
+
+header p{
+    margin-top:10px;
+    color:#555;
+}
+
+.hero{
+    padding:80px 20px;
+    text-align:center;
+    background:linear-gradient(to right,#fff5f5,#fffaf7);
+}
+
+.hero h2{
+    font-size:42px;
+    margin-bottom:20px;
+    color:#8b4513;
+}
+
+.hero p{
+    font-size:18px;
+    margin-bottom:30px;
+}
+
+.btn{
+    display:inline-block;
+    padding:15px 25px;
+    background:#d63384;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+    margin:10px;
+}
+
+.btn:hover{
+    background:#b02a6f;
+}
+
+section{
+    padding:60px 20px;
+    max-width:1100px;
+    margin:auto;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:40px;
+    color:#8b4513;
+}
+
+.about{
+    text-align:center;
+    line-height:1.8;
+}
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.1);
+    text-align:center;
+}
+
+.card h3{
+    color:#d63384;
+    margin-bottom:15px;
+}
+
+.gallery-section{
+    text-align:center;
+}
+
+.contact{
+    background:#fff0f3;
+    border-radius:15px;
+    text-align:center;
+}
+
+.contact a{
+    display:block;
+    margin:15px 0;
+    color:#333;
+    text-decoration:none;
+    font-size:18px;
+}
+
+footer{
+    background:#8b4513;
+    color:white;
+    text-align:center;
+    padding:20px;
+    margin-top:40px;
+}
+
+.whatsapp-float{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:#25D366;
+    color:white;
+    padding:15px 18px;
+    border-radius:50px;
+    text-decoration:none;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Creamy Bakers By Niha</h1>
+    <p>Homemade Cakes & Desserts Made With Love</p>
+</header>
+
+<section class="hero">
+    <h2>Freshly Baked Happiness</h2>
+    <p>Custom cakes, cupcakes and desserts for every celebration.</p>
+
+    <a href="https://wa.me/917710802030" class="btn">
+        Order Now
+    </a>
+
+    <a href="gallery.html" class="btn">
+        View Gallery
+    </a>
+</section>
+
+<section>
+    <h2 class="section-title">About Us</h2>
+
+    <div class="about">
+        <p>
+            Welcome to Creamy Bakers By Niha!
+            We specialize in homemade cakes, cupcakes and delicious desserts
+            crafted with premium ingredients and lots of love.
+        </p>
+    </div>
+</section>
+
+<section>
+    <h2 class="section-title">Our Specialties</h2>
+
+    <div class="products">
+
+        <div class="card">
+            <h3>🎂 Custom Cakes</h3>
+            <p>Birthday, anniversary and celebration cakes.</p>
+        </div>
+
+        <div class="card">
+            <h3>🧁 Cupcakes</h3>
+            <p>Fresh and beautifully decorated cupcakes.</p>
+        </div>
+
+        <div class="card">
+            <h3>🍪 Cookies</h3>
+            <p>Soft and delicious homemade cookies.</p>
+        </div>
+
+        <div class="card">
+            <h3>🍫 Brownies</h3>
+            <p>Rich and fudgy chocolate brownies.</p>
+        </div>
+
+    </div>
+</section>
+
+<section class="gallery-section">
+    <h2 class="section-title">See Our Creations</h2>
+
+    <p>Explore our cake gallery and discover our latest designs.</p>
+
+    <br>
+
+    <a href="gallery.html" class="btn">
+        View Full Gallery
+    </a>
+</section>
+
+<section class="contact">
+
+    <h2 class="section-title">Contact Us</h2>
+
+    <a href="tel:+917710802030">
+        📞 Call Us: +91 7710802030
+    </a>
+
+    <a href="https://wa.me/917710802030">
+        💬 WhatsApp Us
+    </a>
+
+    <a href="https://instagram.com/creamy_bakers_by_niha">
+        📷 Instagram
+    </a>
+
+    <a href="https://facebook.com/profile.php?id=100076468413641">
+        👍 Facebook
+    </a>
+
+</section>
+
+<footer>
+    © 2020 Creamy Bakers By Niha | Made With ❤️
+</footer>
+
+<a class="whatsapp-float"
+href="https://wa.me/917710802030">
+WhatsApp
+</a>
+
+</body>
+</html>
