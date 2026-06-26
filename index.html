@@ -1,369 +1,563 @@
-bash
-
-cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Creamy Bakers By Niha</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ── TOKENS ── */
-:root {
-  --black:       #0a0a0a;
-  --black-soft:  #111111;
-  --black-card:  #161616;
-  --gold:        #c9963a;
-  --gold-light:  #e8b84b;
-  --gold-pale:   #f5e2b0;
-  --gold-dim:    #7a5a1e;
-  --white:       #ffffff;
-  --text-muted:  #a0907a;
-  --radius:      14px;
+:root{
+  --black:#080807;
+  --surface:#100f0d;
+  --card:#181610;
+  --gold:#c8922a;
+  --gold2:#e6b84a;
+  --gold3:#f5dda0;
+  --goldDim:#6b4e14;
+  --muted:#9a8a72;
+  --white:#fffef9;
+  --r:14px;
 }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:var(--black);color:var(--gold3);line-height:1.75;overflow-x:hidden}
 
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: 'Lato', Arial, sans-serif;
-  background: var(--black);
-  color: var(--gold-pale);
-  line-height: 1.7;
-}
+/* ── SCROLL REVEAL ── */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:0.1s}
+.reveal-delay-2{transition-delay:0.2s}
+.reveal-delay-3{transition-delay:0.3s}
+.reveal-delay-4{transition-delay:0.4s}
 
 /* ── HEADER ── */
-header {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(10,10,10,0.96);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--gold-dim);
-  padding: 14px 30px;
-  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+header{
+  position:sticky;top:0;z-index:200;
+  background:rgba(8,8,7,0.94);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--goldDim);
+  padding:12px 40px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
 }
-
-.header-brand { display: flex; align-items: center; gap: 14px; }
-
-.header-logo {
-  height: 50px; width: 50px; border-radius: 50%;
-  object-fit: cover; border: 2px solid var(--gold);
+.brand{display:flex;align-items:center;gap:14px}
+.logo-wrap{
+  width:46px;height:46px;border-radius:50%;
+  border:1.5px solid var(--gold);overflow:hidden;
+  background:var(--surface);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
 }
-
-.header-text h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 19px; color: var(--gold-light); letter-spacing: 0.4px;
-}
-.header-text p {
-  font-size: 11px; color: var(--text-muted);
-  letter-spacing: 1px; text-transform: uppercase;
-}
-
-nav a {
-  color: var(--text-muted); text-decoration: none;
-  font-size: 12px; letter-spacing: 0.8px; text-transform: uppercase;
-  margin-left: 22px; transition: color 0.25s;
-}
-nav a:hover { color: var(--gold-light); }
+.logo-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+.logo-fallback{display:none;width:100%;height:100%;align-items:center;justify-content:center}
+.logo-fallback svg{width:28px;height:28px}
+.brand-name{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--gold2);letter-spacing:0.3px;line-height:1.2}
+.brand-tag{font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted)}
+nav{display:flex;gap:28px}
+nav a{color:var(--muted);text-decoration:none;font-size:12px;letter-spacing:1.2px;text-transform:uppercase;transition:color 0.2s}
+nav a:hover{color:var(--gold2)}
 
 /* ── HERO ── */
-.hero {
-  min-height: 90vh;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  text-align: center; padding: 80px 24px;
-  background: radial-gradient(ellipse 70% 60% at 50% 40%, #1e1507 0%, var(--black) 70%);
-  position: relative; overflow: hidden;
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:100px 24px 80px;
+  background:radial-gradient(ellipse 80% 65% at 50% 45%,#1d1508 0%,var(--black) 72%);
+  position:relative;overflow:hidden;
 }
+.hero::before{
+  content:'';position:absolute;
+  width:600px;height:600px;border-radius:50%;
+  border:1px solid rgba(200,146,42,0.1);
+  top:50%;left:50%;transform:translate(-50%,-52%);
+  pointer-events:none;
+}
+.hero::after{
+  content:'';position:absolute;
+  width:440px;height:440px;border-radius:50%;
+  border:1px solid rgba(200,146,42,0.07);
+  top:50%;left:50%;transform:translate(-50%,-52%);
+  pointer-events:none;
+}
+.hero-logo-ring{
+  width:200px;height:200px;border-radius:50%;
+  border:2px solid var(--gold);
+  background:var(--surface);
+  overflow:hidden;margin-bottom:40px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 60px rgba(200,146,42,0.3),0 0 120px rgba(200,146,42,0.1);
+  animation:pulse 4s ease-in-out infinite;
+  flex-shrink:0;
+}
+.hero-logo-ring img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-logo-fallback{
+  display:none;flex-direction:column;align-items:center;gap:8px;
+}
+.hero-logo-fallback svg{width:80px;height:80px}
+.hero-logo-fallback span{font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--gold);letter-spacing:2px;text-transform:uppercase}
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 50px rgba(200,146,42,0.28),0 0 100px rgba(200,146,42,0.09)}
+  50%{box-shadow:0 0 75px rgba(200,146,42,0.48),0 0 150px rgba(200,146,42,0.18)}
+}
+.hero-eyebrow{font-size:11px;letter-spacing:3.5px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,8vw,82px);font-weight:600;color:var(--gold2);line-height:1.1;margin-bottom:20px}
+.hero h1 em{font-style:italic;color:var(--white)}
+.hero-sub{font-size:17px;color:var(--muted);max-width:500px;margin-bottom:44px;font-weight:300}
+.btns{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 30px;border-radius:8px;font-size:12px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;text-decoration:none;transition:all 0.25s;cursor:pointer;border:none}
+.btn-gold{background:var(--gold);color:var(--black)}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 10px 28px rgba(200,146,42,0.38)}
+.btn-ghost{background:transparent;color:var(--gold);border:1.5px solid var(--gold)}
+.btn-ghost:hover{background:rgba(200,146,42,0.08);transform:translateY(-2px)}
 
-.hero-logo {
-  width: 175px; height: 175px; border-radius: 50%; object-fit: cover;
-  border: 3px solid var(--gold);
-  box-shadow: 0 0 40px rgba(201,150,58,0.35), 0 0 80px rgba(201,150,58,0.12);
-  margin-bottom: 34px;
-  animation: glow 3s ease-in-out infinite alternate;
+/* ── STATS BAR ── */
+.stats-bar{
+  background:var(--surface);
+  border-top:1px solid var(--goldDim);
+  border-bottom:1px solid var(--goldDim);
+  padding:36px 24px;
 }
+.stats-inner{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));max-width:900px;margin:0 auto;gap:20px}
+.stat{text-align:center}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:700;color:var(--gold2);line-height:1}
+.stat-label{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:6px}
 
-@keyframes glow {
-  from { box-shadow: 0 0 30px rgba(201,150,58,0.3), 0 0 60px rgba(201,150,58,0.1); }
-  to   { box-shadow: 0 0 55px rgba(201,150,58,0.55), 0 0 110px rgba(201,150,58,0.22); }
-}
-
-.hero-eyebrow {
-  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 14px;
-}
-
-.hero h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(38px, 7vw, 66px); font-weight: 700;
-  color: var(--gold-light); line-height: 1.15; margin-bottom: 18px;
-}
-.hero h2 em { font-style: italic; color: var(--white); }
-
-.hero > p {
-  font-size: 17px; color: var(--text-muted);
-  max-width: 460px; margin-bottom: 40px;
-}
-
-.btn-group { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
-
-.btn {
-  display: inline-block; padding: 14px 30px; border-radius: 8px;
-  font-size: 13px; font-weight: 700; letter-spacing: 0.8px;
-  text-transform: uppercase; text-decoration: none; transition: all 0.25s;
-}
-.btn-primary { background: var(--gold); color: var(--black); }
-.btn-primary:hover {
-  background: var(--gold-light); transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(201,150,58,0.4);
-}
-.btn-outline {
-  background: transparent; color: var(--gold);
-  border: 1.5px solid var(--gold);
-}
-.btn-outline:hover {
-  background: rgba(201,150,58,0.08); transform: translateY(-2px);
-}
-
-/* ── DIVIDER ── */
-.divider {
-  display: flex; align-items: center; gap: 14px;
-  max-width: 260px; margin: 0 auto 56px;
-}
-.divider::before, .divider::after {
-  content: ''; flex: 1; height: 1px; background: var(--gold-dim);
-}
-.divider span { color: var(--gold); font-size: 16px; }
-
-/* ── SECTIONS ── */
-section { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
-
-.section-label {
-  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--gold); text-align: center; margin-bottom: 10px;
-}
-.section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(26px, 4vw, 40px);
-  color: var(--gold-light); text-align: center; margin-bottom: 48px;
-}
+/* ── SECTION HELPERS ── */
+.section-wrap{padding:90px 24px;max-width:1100px;margin:0 auto}
+.eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:10px}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,4.5vw,50px);font-weight:600;color:var(--gold2);text-align:center;margin-bottom:52px;line-height:1.2}
+.ornament{display:flex;align-items:center;gap:18px;max-width:280px;margin:0 auto 60px}
+.ornament::before,.ornament::after{content:'';flex:1;height:1px;background:var(--goldDim)}
+.ornament span{color:var(--gold);font-size:14px}
 
 /* ── ABOUT ── */
-.about {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 60px; align-items: center; max-width: 880px; margin: 0 auto;
+.about-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:70px;align-items:center;max-width:960px;margin:0 auto}
+.about-img-wrap{display:flex;justify-content:center}
+.about-img-ring{
+  width:240px;height:240px;border-radius:50%;border:2px solid var(--goldDim);
+  background:var(--card);overflow:hidden;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 40px rgba(200,146,42,0.15);
 }
-.about-logo { display: flex; justify-content: center; }
-.about-logo img {
-  width: 210px; height: 210px; border-radius: 50%; object-fit: cover;
-  border: 2px solid var(--gold-dim);
-  box-shadow: 0 0 28px rgba(201,150,58,0.18);
-}
-.about-text p { color: var(--text-muted); font-size: 15.5px; line-height: 1.9; }
-.about-text p + p { margin-top: 14px; }
+.about-img-ring img{width:100%;height:100%;object-fit:cover;display:block}
+.about-img-fallback{display:none;flex-direction:column;align-items:center;gap:6px}
+.about-img-fallback svg{width:70px;height:70px}
+.about-text h3{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--gold2);margin-bottom:20px}
+.about-text p{color:var(--muted);font-size:15.5px;line-height:1.9;margin-bottom:14px}
+.about-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.tag{padding:7px 16px;border:1px solid var(--goldDim);border-radius:30px;font-size:12px;color:var(--gold);letter-spacing:0.8px}
 
-/* ── CARDS ── */
-.products {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+/* ── PROCESS ── */
+.process-section{background:var(--surface);padding:90px 24px;border-top:1px solid var(--goldDim);border-bottom:1px solid var(--goldDim)}
+.process-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:32px;max-width:1000px;margin:0 auto}
+.process-card{text-align:center;position:relative;padding:10px 16px}
+.process-card:not(:last-child)::after{
+  content:'→';position:absolute;right:-18px;top:28px;
+  color:var(--goldDim);font-size:22px;
 }
-.card {
-  background: var(--black-card);
-  border: 1px solid rgba(201,150,58,0.18);
-  padding: 30px 24px; border-radius: var(--radius); text-align: center;
-  transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
-  position: relative; overflow: hidden;
-}
-.card::before {
-  content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(201,150,58,0.05) 0%, transparent 70%);
-  pointer-events: none;
-}
-.card:hover {
-  transform: translateY(-6px);
-  border-color: var(--gold);
-  box-shadow: 0 12px 40px rgba(201,150,58,0.15);
-}
-.card-icon { font-size: 38px; margin-bottom: 14px; display: block; }
-.card h3 { font-family: 'Playfair Display', serif; font-size: 19px; color: var(--gold-light); margin-bottom: 10px; }
-.card p { color: var(--text-muted); font-size: 14px; }
+.step-num{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:700;color:rgba(200,146,42,0.18);line-height:1;margin-bottom:12px}
+.process-icon{font-size:32px;margin-bottom:12px}
+.process-card h3{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--gold2);margin-bottom:8px}
+.process-card p{font-size:14px;color:var(--muted);line-height:1.7}
 
-/* ── GALLERY ── */
-.gallery-section { text-align: center; }
-.gallery-section > p { color: var(--text-muted); margin-bottom: 30px; font-size: 16px; }
+/* ── PRODUCTS ── */
+.products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+.product-card{
+  background:var(--card);border:1px solid rgba(200,146,42,0.16);
+  border-radius:var(--r);padding:34px 26px;text-align:center;
+  transition:transform 0.28s,border-color 0.28s,box-shadow 0.28s;
+  position:relative;overflow:hidden;
+}
+.product-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(200,146,42,0.06) 0%,transparent 65%);
+  pointer-events:none;
+}
+.product-card:hover{transform:translateY(-8px);border-color:var(--gold);box-shadow:0 16px 48px rgba(200,146,42,0.16)}
+.p-icon{font-size:44px;margin-bottom:18px;display:block}
+.product-card h3{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold2);margin-bottom:10px}
+.product-card p{color:var(--muted);font-size:14px;line-height:1.7}
+.product-badge{display:inline-block;margin-top:16px;padding:5px 14px;background:rgba(200,146,42,0.1);border:1px solid var(--goldDim);border-radius:20px;font-size:11px;color:var(--gold);letter-spacing:0.8px}
+
+/* ── TESTIMONIALS ── */
+.testi-section{background:var(--surface);padding:90px 24px;border-top:1px solid var(--goldDim);border-bottom:1px solid var(--goldDim)}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;max-width:1000px;margin:0 auto}
+.testi-card{background:var(--card);border:1px solid rgba(200,146,42,0.14);border-radius:var(--r);padding:30px;position:relative}
+.testi-card::before{content:'\201C';position:absolute;top:16px;left:22px;font-family:'Cormorant Garamond',serif;font-size:72px;color:rgba(200,146,42,0.18);line-height:1}
+.testi-text{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:20px;padding-top:28px}
+.testi-author{display:flex;align-items:center;gap:12px}
+.avatar{width:40px;height:40px;border-radius:50%;background:var(--goldDim);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--gold2);flex-shrink:0}
+.author-name{font-size:14px;font-weight:500;color:var(--gold2)}
+.author-loc{font-size:12px;color:var(--muted);letter-spacing:0.5px}
+.stars{color:var(--gold);font-size:13px;margin-bottom:10px;letter-spacing:2px}
+
+/* ── GALLERY CTA ── */
+.gallery-wrap{text-align:center;max-width:600px;margin:0 auto}
+.gallery-wrap p{color:var(--muted);font-size:16px;margin-bottom:32px}
 
 /* ── CONTACT ── */
-.contact-wrap {
-  background: var(--black-card);
-  border: 1px solid rgba(201,150,58,0.18);
-  border-radius: 20px; padding: 50px 40px;
-  text-align: center; max-width: 580px; margin: 0 auto;
+.contact-box{
+  background:var(--card);border:1px solid rgba(200,146,42,0.18);
+  border-radius:20px;padding:56px 44px;max-width:620px;margin:0 auto;text-align:center;
 }
-.contact-wrap > p { color: var(--text-muted); font-size: 15px; }
-.contact-links { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
-.contact-links a {
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  color: var(--text-muted); text-decoration: none; font-size: 15.5px;
-  padding: 13px 20px; border-radius: 10px;
-  border: 1px solid rgba(201,150,58,0.12);
-  background: rgba(201,150,58,0.03);
-  transition: all 0.25s;
+.contact-box p{color:var(--muted);font-size:15px;margin-bottom:32px}
+.contact-links{display:flex;flex-direction:column;gap:12px}
+.contact-links a{
+  display:flex;align-items:center;gap:14px;
+  color:var(--muted);text-decoration:none;font-size:15.5px;
+  padding:14px 22px;border-radius:10px;
+  border:1px solid rgba(200,146,42,0.12);
+  background:rgba(200,146,42,0.03);
+  transition:all 0.25s;text-align:left;
 }
-.contact-links a:hover {
-  color: var(--gold-light); border-color: var(--gold);
-  background: rgba(201,150,58,0.08); transform: translateX(4px);
-}
+.contact-links a:hover{color:var(--gold2);border-color:var(--gold);background:rgba(200,146,42,0.08);transform:translateX(6px)}
+.contact-links a span.c-icon{font-size:20px;flex-shrink:0}
+.contact-links a .c-label{display:flex;flex-direction:column;gap:1px}
+.contact-links a .c-title{font-size:13px;font-weight:500;color:var(--gold2)}
+.contact-links a .c-val{font-size:13px;color:var(--muted)}
 
 /* ── FOOTER ── */
-footer {
-  background: var(--black-soft);
-  border-top: 1px solid var(--gold-dim);
-  color: var(--text-muted); text-align: center;
-  padding: 26px 20px; font-size: 13.5px; letter-spacing: 0.4px;
+footer{
+  background:var(--surface);border-top:1px solid var(--goldDim);
+  padding:40px 24px;text-align:center;
 }
-footer .gold { color: var(--gold); }
+.footer-logo{display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:24px}
+.footer-logo-ring{
+  width:56px;height:56px;border-radius:50%;border:1.5px solid var(--goldDim);
+  background:var(--card);overflow:hidden;display:flex;align-items:center;justify-content:center;
+}
+.footer-logo-ring img{width:100%;height:100%;object-fit:cover;display:block}
+.footer-logo-ring-fallback{display:none;width:100%;height:100%;align-items:center;justify-content:center}
+.footer-name{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--gold2);font-weight:600}
+.footer-tag{font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted)}
+.footer-links{display:flex;justify-content:center;gap:24px;margin-bottom:24px;flex-wrap:wrap}
+.footer-links a{color:var(--muted);text-decoration:none;font-size:12px;letter-spacing:0.8px;text-transform:uppercase;transition:color 0.2s}
+.footer-links a:hover{color:var(--gold)}
+.footer-copy{font-size:13px;color:var(--muted)}
+.footer-copy span{color:var(--gold)}
 
 /* ── WHATSAPP ── */
-.whatsapp-float {
-  position: fixed; bottom: 22px; right: 22px;
-  background: #25D366; color: white;
-  padding: 13px 22px; border-radius: 50px;
-  text-decoration: none; font-weight: 700; font-size: 14px;
-  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
-  z-index: 200; transition: transform 0.2s, box-shadow 0.2s;
+.wa-float{
+  position:fixed;bottom:24px;right:24px;z-index:300;
+  background:#25D366;color:white;
+  padding:13px 22px;border-radius:50px;
+  text-decoration:none;font-weight:600;font-size:13px;letter-spacing:0.5px;
+  box-shadow:0 4px 22px rgba(37,211,102,0.45);
+  transition:transform 0.2s,box-shadow 0.2s;
+  display:flex;align-items:center;gap:8px;
 }
-.whatsapp-float:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 28px rgba(37,211,102,0.55);
-}
+.wa-float:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(37,211,102,0.55)}
 
 /* ── RESPONSIVE ── */
-@media (max-width: 700px) {
-  header { flex-direction: column; gap: 10px; }
-  nav { display: flex; }
-  nav a { margin: 0 10px; font-size: 11px; }
-  .about { grid-template-columns: 1fr; gap: 28px; text-align: center; }
-  .about-logo { order: -1; }
-  .contact-wrap { padding: 28px 18px; }
+@media(max-width:720px){
+  header{flex-direction:column;gap:10px;padding:14px 20px}
+  nav{gap:16px}
+  nav a{font-size:11px;margin:0}
+  .about-grid{grid-template-columns:1fr;gap:30px;text-align:center}
+  .about-img-wrap{order:-1}
+  .about-tags{justify-content:center}
+  .contact-box{padding:32px 20px}
+  .process-card:not(:last-child)::after{display:none}
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-logo { animation: none; }
-  * { transition: none !important; }
+@media(prefers-reduced-motion:reduce){
+  .hero-logo-ring{animation:none}
+  .reveal,.reveal.visible{opacity:1;transform:none;transition:none}
+  *{transition:none!important}
 }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
+<!-- ── HEADER ── -->
 <header>
-  <div class="header-brand">
-    <img src="Final_DarkBlack.png" alt="Logo" class="header-logo">
-    <div class="header-text">
-      <h1>Creamy Bakers By Niha</h1>
-      <p>Homemade Cakes &amp; Desserts</p>
+  <div class="brand">
+    <div class="logo-wrap" id="hdrWrap">
+      <img src="Final_DarkBlack.png" alt="Creamy Bakers By Niha" id="hdrImg"
+           onerror="this.style.display='none';document.getElementById('hdrFallback').style.display='flex'">
+      <div class="logo-fallback" id="hdrFallback">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="19" stroke="#c8922a" stroke-width="1.5"/>
+          <text x="20" y="26" text-anchor="middle" font-family="serif" font-size="18" fill="#c8922a" font-weight="600">CB</text>
+        </svg>
+      </div>
+    </div>
+    <div>
+      <div class="brand-name">Creamy Bakers By Niha</div>
+      <div class="brand-tag">Homemade Cakes &amp; Desserts</div>
     </div>
   </div>
   <nav>
     <a href="#about">About</a>
-    <a href="#specialties">Menu</a>
+    <a href="#process">How It Works</a>
+    <a href="#menu">Menu</a>
     <a href="#contact">Contact</a>
   </nav>
 </header>
 
-<!-- HERO -->
+<!-- ── HERO ── -->
 <section class="hero">
-  <img src="Final_DarkBlack.png" alt="Creamy Bakers By Niha" class="hero-logo">
-  <p class="hero-eyebrow">Handcrafted with Love &nbsp;·&nbsp; Made from Scratch</p>
-  <h2>Freshly Baked <em>Happiness</em></h2>
-  <p>Custom cakes, cupcakes and desserts for every celebration — made with premium ingredients and a whole lot of heart.</p>
-  <div class="btn-group">
-    <a href="https://wa.me/917710802030" class="btn btn-primary">Order Now</a>
-    <a href="gallery.html" class="btn btn-outline">View Gallery</a>
+  <div class="hero-logo-ring" id="heroWrap">
+    <img src="Final_DarkBlack.png" alt="Creamy Bakers By Niha logo" id="heroImg"
+         onerror="this.style.display='none';document.getElementById('heroFallback').style.display='flex'">
+    <div class="hero-logo-fallback" id="heroFallback">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="48" stroke="#c8922a" stroke-width="1.5"/>
+        <text x="50" y="42" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#c8922a" letter-spacing="2">CREAMY</text>
+        <text x="50" y="58" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#c8922a" letter-spacing="2">BAKERS</text>
+        <text x="50" y="74" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#6b4e14" letter-spacing="1">BY NIHA</text>
+      </svg>
+    </div>
+  </div>
+  <p class="hero-eyebrow reveal">Handcrafted with Love &nbsp;·&nbsp; Made from Scratch</p>
+  <h1 class="reveal reveal-delay-1">Freshly Baked <em>Happiness</em></h1>
+  <p class="hero-sub reveal reveal-delay-2">Custom cakes, cupcakes and desserts for every celebration — made with premium ingredients and a whole lot of heart.</p>
+  <div class="btns reveal reveal-delay-3">
+    <a href="https://wa.me/917710802030" class="btn btn-gold">🎂 Order Now</a>
+    <a href="gallery.html" class="btn btn-ghost">View Gallery</a>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about">
-  <p class="section-label">Our Story</p>
-  <h2 class="section-title">About Us</h2>
-  <div class="about">
-    <div class="about-logo">
-      <img src="Final_DarkBlack.png" alt="Creamy Bakers By Niha Logo">
+<!-- ── STATS BAR ── -->
+<div class="stats-bar reveal">
+  <div class="stats-inner">
+    <div class="stat">
+      <div class="stat-num">500+</div>
+      <div class="stat-label">Cakes Delivered</div>
     </div>
-    <div class="about-text">
-      <p>Welcome to <strong style="color:var(--gold-light)">Creamy Bakers By Niha</strong> — where every cake tells a story and every bite feels like home.</p>
-      <p>We specialise in homemade cakes, cupcakes, and delicious desserts, crafted with premium ingredients and made entirely from scratch with love.</p>
-      <p>From intimate birthdays to grand celebrations, we pour our heart into every creation so your special moments taste as beautiful as they look.</p>
+    <div class="stat">
+      <div class="stat-num">200+</div>
+      <div class="stat-label">Happy Families</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">5★</div>
+      <div class="stat-label">Customer Rating</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">4+</div>
+      <div class="stat-label">Years of Baking</div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- SPECIALTIES -->
-<section id="specialties">
-  <div class="divider"><span>✦</span></div>
-  <p class="section-label">What We Make</p>
-  <h2 class="section-title">Our Specialties</h2>
-  <div class="products">
-    <div class="card">
-      <span class="card-icon">🎂</span>
+<!-- ── ABOUT ── -->
+<div class="section-wrap" id="about">
+  <p class="eyebrow reveal">Our Story</p>
+  <h2 class="sec-title reveal reveal-delay-1">Made with Love,<br>Served with Pride</h2>
+  <div class="about-grid">
+    <div class="about-img-wrap reveal">
+      <div class="about-img-ring" id="aboutWrap">
+        <img src="Final_DarkBlack.png" alt="Creamy Bakers By Niha" id="aboutImg"
+             onerror="this.style.display='none';document.getElementById('aboutFallback').style.display='flex'">
+        <div class="about-img-fallback" id="aboutFallback">
+          <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="40" cy="40" r="38" stroke="#c8922a" stroke-width="1.5"/>
+            <text x="40" y="38" text-anchor="middle" font-family="serif" font-size="11" fill="#c8922a" letter-spacing="1">CREAMY</text>
+            <text x="40" y="52" text-anchor="middle" font-family="serif" font-size="11" fill="#c8922a" letter-spacing="1">BAKERS</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="about-text reveal reveal-delay-1">
+      <h3>Welcome to Creamy Bakers By Niha</h3>
+      <p>Every cake we make is a labour of love. We started as a small home kitchen in 2020 with one goal — to create desserts so good, they make your celebrations unforgettable.</p>
+      <p>We use only premium, carefully sourced ingredients — no preservatives, no shortcuts. Every bake is made fresh to order, tailored to your taste and occasion.</p>
+      <p>From elegant wedding tiers to whimsical birthday cakes and rich fudgy brownies, we pour our entire heart into every single creation.</p>
+      <div class="about-tags">
+        <span class="tag">100% Homemade</span>
+        <span class="tag">Premium Ingredients</span>
+        <span class="tag">Made to Order</span>
+        <span class="tag">No Preservatives</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── HOW IT WORKS ── -->
+<div class="process-section" id="process">
+  <p class="eyebrow reveal">Simple &amp; Easy</p>
+  <h2 class="sec-title reveal reveal-delay-1">How to Order</h2>
+  <div class="process-grid">
+    <div class="process-card reveal">
+      <div class="step-num">01</div>
+      <div class="process-icon">💬</div>
+      <h3>Reach Out</h3>
+      <p>Message us on WhatsApp or Instagram with your order details and preferred date.</p>
+    </div>
+    <div class="process-card reveal reveal-delay-1">
+      <div class="step-num">02</div>
+      <div class="process-icon">🎨</div>
+      <h3>Customise</h3>
+      <p>We discuss flavours, design, size and any special requirements with you personally.</p>
+    </div>
+    <div class="process-card reveal reveal-delay-2">
+      <div class="step-num">03</div>
+      <div class="process-icon">🧁</div>
+      <h3>We Bake</h3>
+      <p>Your order is baked fresh on the day using premium ingredients — made with love.</p>
+    </div>
+    <div class="process-card reveal reveal-delay-3">
+      <div class="step-num">04</div>
+      <div class="process-icon">🎁</div>
+      <h3>Delivered to You</h3>
+      <p>Your creation is packed beautifully and ready for your special celebration.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── MENU / SPECIALTIES ── -->
+<div class="section-wrap" id="menu">
+  <div class="ornament"><span>✦</span></div>
+  <p class="eyebrow reveal">What We Offer</p>
+  <h2 class="sec-title reveal reveal-delay-1">Our Specialties</h2>
+  <div class="products-grid">
+    <div class="product-card reveal">
+      <span class="p-icon">🎂</span>
       <h3>Custom Cakes</h3>
-      <p>Birthday, anniversary, and celebration cakes designed just for you.</p>
+      <p>Birthday, anniversary, baby shower and wedding cakes — designed and crafted just for your occasion.</p>
+      <span class="product-badge">Our Signature</span>
     </div>
-    <div class="card">
-      <span class="card-icon">🧁</span>
+    <div class="product-card reveal reveal-delay-1">
+      <span class="p-icon">🧁</span>
       <h3>Cupcakes</h3>
-      <p>Fresh and beautifully decorated cupcakes for every occasion.</p>
+      <p>Beautifully decorated, moist cupcakes in a variety of flavours — perfect for parties and gifting.</p>
+      <span class="product-badge">Fan Favourite</span>
     </div>
-    <div class="card">
-      <span class="card-icon">🍪</span>
+    <div class="product-card reveal reveal-delay-2">
+      <span class="p-icon">🍪</span>
       <h3>Cookies</h3>
-      <p>Soft, chewy, and irresistible homemade cookies baked to order.</p>
+      <p>Soft, chewy, and full of flavour — from classic butter to stuffed chocolate chip and more.</p>
+      <span class="product-badge">Made to Order</span>
     </div>
-    <div class="card">
-      <span class="card-icon">🍫</span>
+    <div class="product-card reveal reveal-delay-3">
+      <span class="p-icon">🍫</span>
       <h3>Brownies</h3>
-      <p>Rich and fudgy chocolate brownies — the ultimate indulgence.</p>
+      <p>Rich, dense, fudgy chocolate brownies — the ultimate indulgence for every chocolate lover.</p>
+      <span class="product-badge">Bestseller</span>
     </div>
   </div>
-</section>
+</div>
 
-<!-- GALLERY CTA -->
-<section class="gallery-section">
-  <div class="divider"><span>✦</span></div>
-  <p class="section-label">Our Work</p>
-  <h2 class="section-title">See Our Creations</h2>
-  <p>Explore our gallery and discover our latest designs, flavours and custom orders.</p>
-  <a href="gallery.html" class="btn btn-primary">View Full Gallery</a>
-</section>
+<!-- ── TESTIMONIALS ── -->
+<div class="testi-section">
+  <p class="eyebrow reveal">What Customers Say</p>
+  <h2 class="sec-title reveal reveal-delay-1">Sweet Words from<br>Sweeter People</h2>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">Niha made the most stunning birthday cake for my daughter. It tasted absolutely incredible — moist, delicious and looked exactly like what we dreamed. Will definitely order again!</p>
+      <div class="testi-author"><div class="avatar">P</div><div><div class="author-name">Priya S.</div><div class="author-loc">Mumbai</div></div></div>
+    </div>
+    <div class="testi-card reveal reveal-delay-1">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">The brownies were out of this world. Fudgy, rich and perfect. I have ordered three times already and every single time the quality is consistent and amazing.</p>
+      <div class="testi-author"><div class="avatar">R</div><div><div class="author-name">Rahul M.</div><div class="author-loc">Pune</div></div></div>
+    </div>
+    <div class="testi-card reveal reveal-delay-2">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">Ordered cupcakes for our office celebration — everyone was blown away by both the taste and the presentation. Niha is so easy to work with and really listens to what you want.</p>
+      <div class="testi-author"><div class="avatar">A</div><div><div class="author-name">Anjali K.</div><div class="author-loc">Nashik</div></div></div>
+    </div>
+  </div>
+</div>
 
-<!-- CONTACT -->
-<section id="contact">
-  <div class="divider"><span>✦</span></div>
-  <p class="section-label">Get In Touch</p>
-  <h2 class="section-title">Contact Us</h2>
-  <div class="contact-wrap">
-    <p>Ready to place an order? Reach out on any platform below — we'd love to hear from you.</p>
+<!-- ── GALLERY CTA ── -->
+<div class="section-wrap">
+  <div class="ornament"><span>✦</span></div>
+  <p class="eyebrow reveal">Our Work</p>
+  <h2 class="sec-title reveal reveal-delay-1">See Our Creations</h2>
+  <div class="gallery-wrap reveal reveal-delay-2">
+    <p>Browse our full gallery of custom cakes, cupcakes, cookies and brownies — each one made with love.</p>
+    <a href="gallery.html" class="btn btn-gold">View Full Gallery</a>
+  </div>
+</div>
+
+<!-- ── CONTACT ── -->
+<div class="section-wrap" id="contact">
+  <div class="ornament"><span>✦</span></div>
+  <p class="eyebrow reveal">Get In Touch</p>
+  <h2 class="sec-title reveal reveal-delay-1">Contact Us</h2>
+  <div class="contact-box reveal reveal-delay-2">
+    <p>Ready to place an order or have a question? We'd love to hear from you on any of these platforms.</p>
     <div class="contact-links">
-      <a href="tel:+917710802030">📞 &nbsp;Call Us: +91 7710802030</a>
-      <a href="https://wa.me/917710802030">💬 &nbsp;WhatsApp Us</a>
-      <a href="https://instagram.com/creamy_bakers_by_niha">📷 &nbsp;@creamy_bakers_by_niha</a>
-      <a href="https://facebook.com/profile.php?id=100076468413641">👍 &nbsp;Facebook Page</a>
+      <a href="tel:+917710802030">
+        <span class="c-icon">📞</span>
+        <span class="c-label"><span class="c-title">Call Us</span><span class="c-val">+91 7710802030</span></span>
+      </a>
+      <a href="https://wa.me/917710802030">
+        <span class="c-icon">💬</span>
+        <span class="c-label"><span class="c-title">WhatsApp</span><span class="c-val">Chat for quick orders</span></span>
+      </a>
+      <a href="https://instagram.com/creamy_bakers_by_niha">
+        <span class="c-icon">📷</span>
+        <span class="c-label"><span class="c-title">Instagram</span><span class="c-val">@creamy_bakers_by_niha</span></span>
+      </a>
+      <a href="https://facebook.com/profile.php?id=100076468413641">
+        <span class="c-icon">👍</span>
+        <span class="c-label"><span class="c-title">Facebook</span><span class="c-val">Creamy Bakers By Niha</span></span>
+      </a>
     </div>
   </div>
-</section>
+</div>
 
-<!-- FOOTER -->
+<!-- ── FOOTER ── -->
 <footer>
-  © 2026 Creamy Bakers By Niha &nbsp;|&nbsp; Made With <span class="gold">❤️ &amp; ✨</span>
+  <div class="footer-logo">
+    <div class="footer-logo-ring" id="footerWrap">
+      <img src="Final_DarkBlack.png" alt="Logo" id="footerImg"
+           onerror="this.style.display='none';document.getElementById('footerFallback').style.display='flex'">
+      <div class="footer-logo-ring-fallback" id="footerFallback">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <text x="20" y="26" text-anchor="middle" font-family="serif" font-size="15" fill="#c8922a" font-weight="600">CB</text>
+        </svg>
+      </div>
+    </div>
+    <div class="footer-name">Creamy Bakers By Niha</div>
+    <div class="footer-tag">Homemade Cakes &amp; Desserts</div>
+  </div>
+  <div class="footer-links">
+    <a href="#about">About</a>
+    <a href="#process">How It Works</a>
+    <a href="#menu">Menu</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <p class="footer-copy">© 2026 Creamy Bakers By Niha &nbsp;|&nbsp; Made With <span>❤️</span></p>
 </footer>
 
-<!-- WHATSAPP FLOAT -->
-<a class="whatsapp-float" href="https://wa.me/917710802030">💬 WhatsApp</a>
+<!-- ── WHATSAPP FLOAT ── -->
+<a class="wa-float" href="https://wa.me/917710802030">💬 WhatsApp Us</a>
 
+<script>
+// Scroll reveal
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Animate stats when in view
+let counted=false;
+const statsObs=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting&&!counted){
+    counted=true;
+    animateStats();
+    statsObs.disconnect();
+  }
+},{threshold:0.5});
+const statsBar=document.querySelector('.stats-bar');
+if(statsBar)statsObs.observe(statsBar);
+
+function animateStats(){
+  const targets=[{el:document.querySelectorAll('.stat-num')[0],end:500,suffix:'+',label:'Cakes Delivered'},
+    {el:document.querySelectorAll('.stat-num')[1],end:200,suffix:'+',label:'Happy Families'},
+    {el:document.querySelectorAll('.stat-num')[2],end:5,suffix:'★',label:'Customer Rating'},
+    {el:document.querySelectorAll('.stat-num')[3],end:4,suffix:'+',label:'Years of Baking'}];
+  targets.forEach(t=>{
+    let start=0;const dur=1400;const step=16;
+    const inc=t.end/(dur/step);
+    const timer=setInterval(()=>{
+      start=Math.min(start+inc,t.end);
+      t.el.textContent=Math.floor(start)+t.suffix;
+      if(start>=t.end)clearInterval(timer);
+    },step);
+  });
+}
+</script>
 </body>
 </html>
-HTMLEOF
